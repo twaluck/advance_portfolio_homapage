@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>漢字コネクト | Game</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body class="game-page">
+
+
+  <main class="game-main game-fullscreen">
+    <div class="game-bg">
+      <div class="orb orb--one"></div>
+      <div class="orb orb--two"></div>
+      <div class="orb orb--three"></div>
+      <div class="floating-kanji" id="floatingKanji"></div>
+    </div>
+
+    <canvas id="particleCanvas" class="particle-canvas"></canvas>
+
+    <section class="game-playfield sketch-layout">
+      <div class="hud-bar">
+        <div class="hud-actions-left">
+          <a href="index.html" class="button ghost icon-only" aria-label="Back to Home">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 12H5M12 19l-7-7 7-7" />
+            </svg>
+          </a>
+        </div>
+        <div class="hud-center-stats">
+          <div class="hud-chip">
+            <span class="hud-label">Score</span>
+            <span class="hud-value" id="scoreText">0</span>
+          </div>
+          <div class="hud-chip lives-chip">
+            <span class="hud-label">Lives</span>
+            <span class="hud-value" id="livesText">❤️❤️❤️</span>
+          </div>
+          <div class="hud-chip">
+            <span class="hud-label">Level</span>
+            <span class="hud-value" id="progressText">1 / 15</span>
+          </div>
+        </div>
+        <div class="hud-actions">
+          <button class="button ghost icon-only" id="pauseGame" aria-label="Pause Game">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              id="pauseIcon">
+              <rect x="6" y="4" width="4" height="16"></rect>
+              <rect x="14" y="4" width="4" height="16"></rect>
+            </svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              id="playIcon" class="hidden">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+          </button>
+          <button class="button" id="startGame">Start</button>
+        </div>
+      </div>
+
+      <div class="mission-pill">
+        <span class="mission-title">Mission</span>
+        <span class="mission-kanji" id="targetKanji">-</span>
+        <span class="mission-hint" id="targetHint">Tap Start</span>
+      </div>
+
+      <div class="bubble-layer" id="gameLayer"></div>
+
+      <div class="build-area-container">
+        <div class="build-area" id="buildArea"></div>
+      </div>
+
+      <div class="feedback-inline" id="feedbackText">ここに結果が表示されます。</div>
+
+      <div class="game-overlay hidden" id="gameOver">
+        <div class="overlay-card">
+          <h2 id="gameOverTitle">Time Up</h2>
+          <p id="gameOverText">もう一度挑戦しましょう。</p>
+          <button class="button" id="restartGame" type="button">Restart</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2024 学生ポートフォリオ</p>
+  </footer>
+  <script src="js/game.js"></script>
+</body>
+
+</html>

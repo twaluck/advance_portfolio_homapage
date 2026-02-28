@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-i18n-ja="プロフィール | Portfolio">プロフィール | Portfolio</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+  <header>
+    <nav aria-label="Primary">
+      <div class="nav-links">
+        <a href="index.html" data-i18n-ja="ホーム">ホーム</a>
+        <a href="about.html" data-i18n-ja="プロフィール">プロフィール</a>
+        <a href="profile.html" data-i18n-ja="マイページ">マイページ</a>
+        <a href="university.html" data-i18n-ja="大学">大学</a>
+        <a href="logs.html" data-i18n-ja="学習ログ">学習ログ</a>
+        <a href="goals.html" data-i18n-ja="目標">目標</a>
+        <a href="projects.html" data-i18n-ja="プロジェクト">プロジェクト</a>
+        <a href="game.html" data-i18n-ja="ゲーム">ゲーム</a>
+        <a href="assistant.html" data-i18n-ja="AIアシスタント">AIアシスタント</a>
+        <a href="news.html" data-i18n-ja="ニュース">ニュース</a>
+        <a href="connect.html" data-i18n-ja="連絡">連絡</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="profile-hero">
+      <div class="profile-card">
+        <div class="profile-header">
+          <div>
+            <h1 id="profile-headline" data-i18n-ja="あなたのプロフィール">あなたのプロフィール</h1>
+            <p id="profile-summary">ここに自己紹介が表示されます。</p>
+          </div>
+          <button id="profile-edit-button" class="button ghost" type="button">編集する</button>
+        </div>
+        <div class="profile-details">
+          <div>
+            <p class="profile-label">国籍</p>
+            <p id="profile-nationality">-</p>
+          </div>
+          <div>
+            <p class="profile-label">現住所</p>
+            <p id="profile-location">-</p>
+          </div>
+          <div>
+            <p class="profile-label">学校</p>
+            <p id="profile-school">-</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="profile-form-card" class="card hidden">
+        <h2>プロフィール編集</h2>
+        <form id="profile-form" class="profile-form">
+          <label for="profile-headline-input">見出し</label>
+          <input type="text" id="profile-headline-input" name="headline" />
+
+          <label for="profile-summary-input">自己紹介</label>
+          <textarea id="profile-summary-input" name="summary" rows="4"></textarea>
+
+          <label for="profile-nationality-input">国籍</label>
+          <input type="text" id="profile-nationality-input" name="nationality" />
+
+          <div class="profile-grid">
+            <div>
+              <label for="profile-prefecture-input">現住所（都道府県）</label>
+              <input type="text" id="profile-prefecture-input" name="prefecture" />
+            </div>
+            <div>
+              <label for="profile-city-input">市区町村</label>
+              <input type="text" id="profile-city-input" name="city" />
+            </div>
+          </div>
+
+          <label for="profile-school-type">学校種別</label>
+          <select id="profile-school-type" name="schoolType">
+            <option value="japanese_school">日本語学校</option>
+            <option value="vocational">専門学校</option>
+            <option value="university">大学</option>
+            <option value="graduate">大学院</option>
+            <option value="other">その他</option>
+          </select>
+
+          <label for="profile-school-name">学校名</label>
+          <input type="text" id="profile-school-name" name="schoolName" />
+
+          <button type="submit" class="button">保存する</button>
+          <p id="profile-status" role="status"></p>
+        </form>
+      </div>
+    </section>
+
+    <section>
+      <h2>自分のノート</h2>
+      <p>下書き・非公開・公開を分けて確認できます。</p>
+
+      <div id="my-drafts" class="course-group hidden">
+        <h3>下書き</h3>
+        <div class="card-grid" id="my-drafts-list"></div>
+      </div>
+
+      <div id="my-private" class="course-group hidden">
+        <h3>非公開</h3>
+        <div class="card-grid" id="my-private-list"></div>
+      </div>
+
+      <div id="my-public" class="course-group">
+        <h3>公開</h3>
+        <div class="card-grid" id="my-public-list"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p data-i18n-ja="© 2024 学生ポートフォリオ">© 2024 学生ポートフォリオ</p>
+  </footer>
+  <script src="js/i18n.js"></script>
+  <script src="js/profile.js"></script>
+</body>
+
+</html>

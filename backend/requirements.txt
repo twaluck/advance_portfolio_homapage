@@ -1,0 +1,15 @@
+fastapi
+uvicorn[standard]
+pydantic
+python-multipart
+python-dotenv
+# Assistant Dependencies
+SpeechRecognition
+pyttsx3
+gTTS
+openai
+pygame
+pyaudio
+
+
+feedparser

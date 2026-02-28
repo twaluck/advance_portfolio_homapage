@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-i18n-ja="大学 | Portfolio">大学 | Portfolio</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+  <header>
+    <nav aria-label="Primary">
+      <div class="nav-links">
+        <a href="index.html" data-i18n-ja="ホーム">ホーム</a>
+        <a href="about.html" data-i18n-ja="プロフィール">プロフィール</a>
+        <a href="profile.html" data-i18n-ja="マイページ">マイページ</a>
+        <a href="university.html" data-i18n-ja="大学">大学</a>
+        <a href="logs.html" data-i18n-ja="学習ログ">学習ログ</a>
+        <a href="goals.html" data-i18n-ja="目標">目標</a>
+        <a href="projects.html" data-i18n-ja="プロジェクト">プロジェクト</a>
+        <a href="game.html" data-i18n-ja="ゲーム">ゲーム</a>
+        <a href="assistant.html" data-i18n-ja="AIアシスタント">AIアシスタント</a>
+        <a href="news.html" data-i18n-ja="ニュース">ニュース</a>
+        <a href="connect.html" data-i18n-ja="連絡">連絡</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <p class="eyebrow" data-i18n-ja="大学での学び">大学での学び</p>
+        <h1 data-i18n-ja="大学で学んだこと">大学で学んだこと</h1>
+        <p data-i18n-ja="科目ごとの要点、身についたスキル、次に活かしたいテーマを整理。カードを追加していくだけで成長の履歴を作れます。">
+          科目ごとの要点、身についたスキル、次に活かしたいテーマを整理。カードを追加していくだけで成長の履歴を作れます。</p>
+        <div class="hero-actions">
+          <a class="button" href="#courses" data-i18n-ja="科目を追加する">科目を追加する</a>
+          <a class="button ghost" href="#summary" data-i18n-ja="学びの方針">学びの方針</a>
+        </div>
+      </div>
+      <div class="hero-card">
+        <h2 data-i18n-ja="学びの軸">学びの軸</h2>
+        <ul>
+          <li data-i18n-ja="AI・ロボティクスの基礎から応用へ">AI・ロボティクスの基礎から応用へ</li>
+          <li data-i18n-ja="研究に直結する実験・制作">研究に直結する実験・制作</li>
+          <li data-i18n-ja="アウトプット中心の学習設計">アウトプット中心の学習設計</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="summary">
+      <h2 data-i18n-ja="学びの方針">学びの方針</h2>
+      <p data-i18n-ja="「何を学び、どう使ったか」を短く書くと、後から見返しやすくなります。">「何を学び、どう使ったか」を短く書くと、後から見返しやすくなります。</p>
+      <div class="card-grid">
+        <article class="card">
+          <h3 data-i18n-ja="授業で学んだこと">授業で学んだこと</h3>
+          <p data-i18n-ja="理論・背景・重要式など、ポイントを3〜5行で。">理論・背景・重要式など、ポイントを3〜5行で。</p>
+        </article>
+        <article class="card">
+          <h3 data-i18n-ja="成果・制作物">成果・制作物</h3>
+          <p data-i18n-ja="レポート、実装、実験結果を端的に。">レポート、実装、実験結果を端的に。</p>
+        </article>
+        <article class="card">
+          <h3 data-i18n-ja="次に活かすこと">次に活かすこと</h3>
+          <p data-i18n-ja="研究テーマ・プロジェクトへの接続を書き残す。">研究テーマ・プロジェクトへの接続を書き残す。</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="courses">
+      <h2 data-i18n-ja="科目一覧">科目一覧</h2>
+      <p data-i18n-ja="学年・学期で絞り込みができます。追加はボタンから行います。">学年・学期で絞り込みができます。追加はボタンから行います。</p>
+
+      <div class="course-toolbar">
+        <div class="course-filters">
+          <label for="filter-year" data-i18n-ja="学年">学年</label>
+          <select id="filter-year" name="filterYear">
+            <option value="all" data-i18n-ja="全学年">全学年</option>
+            <option value="1">1年</option>
+            <option value="2">2年</option>
+            <option value="3">3年</option>
+            <option value="4">4年</option>
+          </select>
+
+          <label for="filter-term" data-i18n-ja="学期">学期</label>
+          <select id="filter-term" name="filterTerm">
+            <option value="all" data-i18n-ja="全学期">全学期</option>
+            <option value="前期" data-i18n-ja="前期">前期</option>
+            <option value="後期" data-i18n-ja="後期">後期</option>
+          </select>
+        </div>
+
+        <button id="course-add-button" class="button" type="button" data-i18n-ja="科目を追加">科目を追加</button>
+      </div>
+
+      <div id="course-modal" class="course-modal hidden" role="dialog" aria-modal="true"
+        aria-labelledby="course-modal-title">
+        <div class="course-modal__content card course-card">
+          <div class="course-modal__header">
+            <h3 id="course-modal-title" data-i18n-ja="科目を追加する">科目を追加する</h3>
+            <button id="course-close-button" class="button ghost" type="button" data-i18n-ja="閉じる">閉じる</button>
+          </div>
+          <p data-i18n-ja="まずは学年・学期・科目名を登録してください。">まずは学年・学期・科目名を登録してください。</p>
+          <form id="course-form" class="course-form hidden">
+            <label for="course-year" data-i18n-ja="何年生">何年生</label>
+            <select id="course-year" name="year" required>
+              <option value="1">1年</option>
+              <option value="2">2年</option>
+              <option value="3">3年</option>
+              <option value="4">4年</option>
+            </select>
+
+            <label for="course-term" data-i18n-ja="学期">学期</label>
+            <select id="course-term" name="term" required>
+              <option value="前期" data-i18n-ja="前期">前期</option>
+              <option value="後期" data-i18n-ja="後期">後期</option>
+            </select>
+
+            <label for="course-name" data-i18n-ja="科目名">科目名</label>
+            <input type="text" id="course-name" name="courseName" required />
+
+            <button type="submit" class="button" data-i18n-ja="科目登録">科目登録</button>
+            <p id="course-status" role="status"></p>
+          </form>
+        </div>
+      </div>
+
+      <div id="drafts-section" class="course-group hidden">
+        <h3 data-i18n-ja="下書き">下書き</h3>
+        <div id="courses-drafts" class="card-grid">
+          <!-- JavaScriptで下書きを表示 -->
+        </div>
+      </div>
+
+      <div id="published-section" class="course-group">
+        <h3 data-i18n-ja="公開・保存済み">公開・保存済み</h3>
+        <div id="courses-list" class="card-grid">
+          <!-- JavaScriptで科目カードを表示 -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p data-i18n-ja="© 2024 学生ポートフォリオ">© 2024 学生ポートフォリオ</p>
+  </footer>
+  <script src="js/i18n.js"></script>
+  <script src="js/courses.js"></script>
+</body>
+
+</html>

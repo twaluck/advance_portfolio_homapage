@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AIニュース | Portfolio</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+        .news-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--surface-color);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+        }
+
+        .news-header-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            display: block;
+            background-color: var(--surface-hover);
+        }
+
+        .news-content {
+            padding: 2rem;
+        }
+
+        .news-controls {
+            display: flex;
+            justify-content: flex-end;
+            padding: 1rem 2rem;
+            background: var(--background-color);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            z-index: 10;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav aria-label="Primary">
+            <div class="nav-links">
+                <a href="index.html">ホーム</a>
+                <a href="about.html">プロフィール</a>
+                <a href="profile.html">マイページ</a>
+                <a href="university.html">大学</a>
+                <a href="logs.html">学習ログ</a>
+                <a href="goals.html">目標</a>
+                <a href="projects.html">プロジェクト</a>
+                <a href="assistant.html">AIアシスタント</a>
+                <a href="news.html" aria-current="page">ニュース</a>
+                <a href="connect.html">連絡</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <p class="eyebrow">DAILY DIGEST</p>
+                <h1>AI Tech & World News</h1>
+                <p>AIが毎日自動で収集・要約する最新テック＆世界情勢ニュース。</p>
+            </div>
+        </section>
+
+        <section style="position: relative; min-height: 400px;">
+            <div id="loading" class="loading-overlay hidden">
+                <div class="spinner"></div>
+                <p>最新ニュースを生成中... (30秒ほどかかります)</p>
+            </div>
+
+            <div class="news-container">
+                <!-- Default / Fallback Image -->
+                <img id="news-image" class="news-header-image"
+                    src="https://via.placeholder.com/1024x512?text=AI+News+Generation" alt="News Header">
+
+                <div class="news-content">
+                    <div id="news-text" class="markdown-body">
+                        <p>読み込み中...</p>
+                    </div>
+                    <p id="news-date" style="margin-top: 2rem; color: #666; font-size: 0.9rem; text-align: right;">
+                        Updated at: -</p>
+                </div>
+
+                <div class="news-controls">
+                    <button id="refresh-btn" class="button">Manual Update (Get Now) / 最新ニュース生成</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2024 学生ポートフォリオ</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="js/news.js"></script>
+</body>
+
+</html>

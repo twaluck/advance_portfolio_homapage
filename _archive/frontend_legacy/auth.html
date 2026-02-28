@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-i18n-ja="アカウント | Portfolio">アカウント | Portfolio</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+  <header>
+    <nav aria-label="Primary">
+      <div class="nav-links">
+        <a href="index.html" data-i18n-ja="ホーム">ホーム</a>
+        <a href="about.html" data-i18n-ja="プロフィール">プロフィール</a>
+        <a href="profile.html" data-i18n-ja="マイページ">マイページ</a>
+        <a href="university.html" data-i18n-ja="大学">大学</a>
+        <a href="logs.html" data-i18n-ja="学習ログ">学習ログ</a>
+        <a href="goals.html" data-i18n-ja="目標">目標</a>
+        <a href="projects.html" data-i18n-ja="プロジェクト">プロジェクト</a>
+        <a href="game.html" data-i18n-ja="ゲーム">ゲーム</a>
+        <a href="assistant.html" data-i18n-ja="AIアシスタント">AIアシスタント</a>
+        <a href="news.html" data-i18n-ja="ニュース">ニュース</a>
+        <a href="connect.html" data-i18n-ja="連絡">連絡</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="auth-shell">
+      <div class="auth-card" data-mode="signup">
+        <div class="auth-panel auth-panel--form">
+          <div class="auth-header signup-only">
+            <h2 data-i18n-ja="アカウント作成">アカウント作成</h2>
+            <p data-i18n-ja="メールまたは電話で登録してログ作成を開始。">メールまたは電話で登録してログ作成を開始。</p>
+          </div>
+          <div class="auth-header signin-only">
+            <h2 data-i18n-ja="ログイン">ログイン</h2>
+            <p data-i18n-ja="おかえりなさい。メールまたは電話で続行。">おかえりなさい。メールまたは電話で続行。</p>
+          </div>
+
+          <div class="auth-social signup-only signin-only">
+            <button class="social-button" data-provider="apple" data-i18n-ja="Appleで続行">Appleで続行</button>
+            <button class="social-button" data-provider="facebook" data-i18n-ja="Facebookで続行">Facebookで続行</button>
+            <button class="social-button" data-provider="google" data-i18n-ja="Googleで続行">Googleで続行</button>
+          </div>
+
+          <div class="auth-divider">
+            <span data-i18n-ja="または">または</span>
+          </div>
+
+          <form id="register-form" class="auth-form signup-only">
+            <label for="register-name" data-i18n-ja="名前">名前</label><br>
+            <input type="text" id="register-name" name="name" required /><br>
+
+            <label for="register-contact" data-i18n-ja="メールまたは電話">メールまたは電話</label>
+            <input type="text" id="register-contact" name="contact" placeholder="you@example.com or +81 90 1234 5678"
+              data-i18n-placeholder-ja="you@example.com または +81 90 1234 5678" required /><br>
+
+            <label for="register-password" data-i18n-ja="パスワード">パスワード</label>
+            <input type="password" id="register-password" name="password" placeholder="8+ characters"
+              data-i18n-placeholder-ja="8文字以上" required /><br>
+
+            <button type="submit" class="button" data-i18n-ja="登録">登録</button>
+          </form>
+          <p id="register-status" class="signup-only" role="status"></p>
+
+          <form id="login-form" class="auth-form signin-only">
+            <label for="login-identifier" data-i18n-ja="メールまたは電話">メールまたは電話</label>
+            <input type="text" id="login-identifier" name="identifier" placeholder="you@example.com or +81 90 1234 5678"
+              data-i18n-placeholder-ja="you@example.com または +81 90 1234 5678" required /><br>
+
+            <label for="login-password" data-i18n-ja="パスワード">パスワード</label>
+            <input type="password" id="login-password" name="password" placeholder="Your password"
+              data-i18n-placeholder-ja="パスワード" required />
+
+            <button type="submit" class="button" data-i18n-ja="ログイン">ログイン</button>
+          </form>
+          <p id="login-status" class="signin-only" role="status"></p>
+        </div>
+
+        <div class="auth-panel auth-panel--accent">
+          <div class="signup-only">
+            <h2 data-i18n-ja="おかえりなさい！">おかえりなさい！</h2>
+            <p data-i18n-ja="既にアカウントをお持ちですか？">既にアカウントをお持ちですか？</p>
+            <button class="button ghost" data-action="show-signin" type="button" data-i18n-ja="ログインへ">ログインへ</button>
+          </div>
+          <div class="signin-only">
+            <h2 data-i18n-ja="ようこそ！">ようこそ！</h2>
+            <p data-i18n-ja="初めてですか？アカウントを作成しましょう。">初めてですか？アカウントを作成しましょう。</p>
+            <button class="button ghost" data-action="show-signup" type="button" data-i18n-ja="アカウント作成">アカウント作成</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p data-i18n-ja="© 2024 学生ポートフォリオ">© 2024 学生ポートフォリオ</p>
+  </footer>
+
+  <script src="js/auth.js"></script>
+  <script src="js/i18n.js"></script>
+</body>
+
+</html>

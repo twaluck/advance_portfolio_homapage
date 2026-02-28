@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI アシスタント | Jarvis</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .chat-container {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .chat-log {
+      height: 400px;
+      overflow-y: auto;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      background: var(--surface-color);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .message {
+      padding: 0.75rem 1rem;
+      border-radius: 1rem;
+      max-width: 80%;
+      line-height: 1.5;
+    }
+
+    .message.user {
+      align-self: flex-end;
+      background: var(--primary-color);
+      color: white;
+      border-bottom-right-radius: 0.25rem;
+    }
+
+    .message.assistant {
+      align-self: flex-start;
+      background: var(--surface-hover);
+      color: var(--text-color);
+      border-bottom-left-radius: 0.25rem;
+    }
+
+    .controls {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .mic-button {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      background: var(--surface-hover);
+      border: 2px solid var(--border-color);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .mic-button.listening {
+      background: #ef4444;
+      color: white;
+      border-color: #ef4444;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
+      }
+
+      70% {
+        box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+      }
+    }
+
+    .text-input {
+      flex: 1;
+      padding: 0.75rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
+      background: var(--background-color);
+      color: var(--text-color);
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav aria-label="Primary">
+      <div class="nav-links">
+        <a href="index.html">ホーム</a>
+        <a href="about.html">プロフィール</a>
+        <a href="profile.html">マイページ</a>
+        <a href="university.html">大学</a>
+        <a href="logs.html">学習ログ</a>
+        <a href="goals.html">目標</a>
+        <a href="projects.html">プロジェクト</a>
+        <a href="assistant.html" aria-current="page">AIアシスタント</a>
+        <a href="news.html">ニュース</a>
+        <a href="connect.html">連絡</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <p class="eyebrow">AI ASSISTANT</p>
+        <h1>Jarvis Web Interface</h1>
+        <p>音声またはテキストで対話できます。「Open Google」などのコマンドも使えます。</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="chat-container">
+        <div class="chat-log" id="chat-log">
+          <div class="message assistant">
+            こんにちは！Jarvisです。何かお手伝いしましょうか？
+          </div>
+        </div>
+
+        <form id="chat-form" class="controls">
+          <button type="button" id="mic-button" class="mic-button" title="音声入力">
+            🎤
+          </button>
+          <input type="text" id="chat-input" class="text-input" placeholder="メッセージを入力..." autocomplete="off">
+          <button type="submit" class="button">送信</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2024 学生ポートフォリオ</p>
+  </footer>
+  <script src="js/assistant.js" type="module"></script>
+</body>
+
+</html>

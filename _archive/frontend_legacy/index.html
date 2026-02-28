@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-i18n-ja="ホーム | Portfolio">ホーム | Portfolio</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+  <header>
+    <nav aria-label="Primary">
+      <div class="nav-links">
+        <a href="index.html" data-i18n-ja="ホーム">ホーム</a>
+        <a href="about.html" data-i18n-ja="プロフィール">プロフィール</a>
+        <a href="profile.html" data-i18n-ja="マイページ">マイページ</a>
+        <a href="university.html" data-i18n-ja="大学">大学</a>
+        <a href="logs.html" data-i18n-ja="学習ログ">学習ログ</a>
+        <a href="goals.html" data-i18n-ja="目標">目標</a>
+        <a href="projects.html" data-i18n-ja="プロジェクト">プロジェクト</a>
+        <a href="game.html" data-i18n-ja="ゲーム">ゲーム</a>
+        <a href="assistant.html" data-i18n-ja="AIアシスタント">AIアシスタント</a>
+        <a href="news.html" data-i18n-ja="ニュース">ニュース</a>
+        <a href="connect.html" data-i18n-ja="連絡">連絡</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="home-auth">
+      <a class="button" href="auth.html" data-i18n-ja="ログイン">ログイン</a>
+    </div>
+    <section class="hero">
+      <div class="hero-content">
+        <p class="eyebrow" data-i18n-ja="AI・ロボティクス・研究・起業">AI・ロボティクス・研究・起業</p>
+        <h1 data-i18n-ja="未来をつくり、歩みを記録する。">未来をつくり、歩みを記録する。</h1>
+        <p data-i18n-ja="博士レベルの研究、ロボット試作、スタートアップ実験のための生きたポートフォリオと学習ログ。">博士レベルの研究、ロボット試作、スタートアップ実験のための生きたポートフォリオと学習ログ。
+        </p>
+        <div class="hero-actions">
+          <a class="button" href="projects.html" data-i18n-ja="プロジェクトを見る">プロジェクトを見る</a>
+          <a class="button ghost" href="logs.html" data-i18n-ja="ログを読む">ログを読む</a>
+          <a class="button ghost" href="projects.html#robotilku" data-i18n-ja="Robotilkuを見る">Robotilkuを見る</a>
+        </div>
+      </div>
+      <div class="hero-card">
+        <h2 data-i18n-ja="現在のフォーカス">現在のフォーカス</h2>
+        <ul>
+          <li data-i18n-ja="身体性知能のAIシステム">身体性知能のAIシステム</li>
+          <li data-i18n-ja="ロボット制御と知覚スタック">ロボット制御と知覚スタック</li>
+          <li data-i18n-ja="Robotilku：AIロボット実験プロジェクト">Robotilku：AIロボット実験プロジェクト</li>
+          <li data-i18n-ja="研究から起業への道筋">研究から起業への道筋</li>
+        </ul>
+        <!-- TODO: Load featured projects and recent log highlights from the API -->
+      </div>
+    </section>
+
+    <section>
+      <h2 data-i18n-ja="ハイライト">ハイライト</h2>
+      <p data-i18n-ja="進行中の取り組みから重要なマイルストーンとアイデア。">進行中の取り組みから重要なマイルストーンとアイデア。</p>
+      <div class="card-grid">
+        <!-- TODO: Render highlight cards from the API -->
+        <article class="card" id="robotilku">
+          <h3 data-i18n-ja="Robotilku">Robotilku</h3>
+          <p data-i18n-ja="AI×ロボットの実験・学習・デモをまとめるプロジェクト。">AI×ロボットの実験・学習・デモをまとめるプロジェクト。</p>
+          <p><a href="projects.html#robotilku" data-i18n-ja="詳細を見る">詳細を見る</a></p>
+        </article>
+        <article class="card">
+          <h3 data-i18n-ja="ロボット実験">ロボット実験</h3>
+          <p data-i18n-ja="適応的なマニピュレーションの試作。">適応的なマニピュレーションの試作。</p>
+        </article>
+        <article class="card">
+          <h3 data-i18n-ja="学習スプリント">学習スプリント</h3>
+          <p data-i18n-ja="週次の研究レビューと振り返り。">週次の研究レビューと振り返り。</p>
+        </article>
+        <article class="card">
+          <h3 data-i18n-ja="スタートアップメモ">スタートアップメモ</h3>
+          <p data-i18n-ja="市場洞察とベンチャー実験。">市場洞察とベンチャー実験。</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p data-i18n-ja="© 2024 学生ポートフォリオ">© 2024 学生ポートフォリオ</p>
+  </footer>
+  <script src="js/i18n.js"></script>
+</body>
+
+</html>
