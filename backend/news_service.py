@@ -2,7 +2,7 @@ import logging
 import os
 import feedparser
 from openai import OpenAI
-from backend.database import get_connection
+from database import get_connection
 
 # Configure logging
 logger = logging.getLogger(__name__)

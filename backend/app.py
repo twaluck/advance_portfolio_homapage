@@ -9,8 +9,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from openai import OpenAI
 
-from backend.database import get_connection
-from backend.schemas import (
+from database import get_connection
+from schemas import (
     CourseCreate,
     CourseUpdate,
     LogCreate,
@@ -25,7 +25,7 @@ from backend.schemas import (
     ProjectUpdate,
     RegisterRequest,
 )
-from backend.security import generate_token, hash_password, verify_password
+from security import generate_token, hash_password, verify_password
 
 load_dotenv()
 
@@ -933,7 +933,7 @@ async def chat(payload: ChatRequest):
         return {"response": "申し訳ありません、エラーが発生しました。", "action": "error"}
 
 # News Agent
-from backend.news_service import fetch_and_save_digest, get_latest_digest
+from news_service import fetch_and_save_digest, get_latest_digest
 
 @app.get("/api/news")
 def get_news():

@@ -137,21 +137,22 @@ class KanjiGame {
     };
 
     this.elements = {
-      startBtn: document.getElementById("startGame"),
-      pauseBtn: document.getElementById("pauseGame"),
-      pauseIcon: document.getElementById("pauseIcon"),
-      playIcon: document.getElementById("playIcon"),
-      gameOver: document.getElementById("gameOver"),
-      restartBtn: document.getElementById("restartGame"),
-      buildArea: document.getElementById("buildArea"),
-      buildContainer: document.querySelector(".build-area-container"),
-      gameLayer: document.getElementById("gameLayer"),
-      targetKanji: document.getElementById("targetKanji"),
-      targetHint: document.getElementById("targetHint"),
-      scoreText: document.getElementById("scoreText"),
-      livesText: document.getElementById("livesText"),
-      progressText: document.getElementById("progressText"),
-      feedback: document.getElementById("feedbackText")
+      backBtn: document.getElementById("backBtn"),
+      pauseBtn: document.getElementById("pauseBtn"),
+      restartGameBtn: document.getElementById("restartGameBtn"),
+      retryBtn: document.getElementById("retryBtn"),
+      gameOverOverlay: document.getElementById("gameOverOverlay"),
+      buildSlots: document.getElementById("buildSlots"),
+      bubbleContainer: document.getElementById("bubbleContainer"),
+      missionTarget: document.getElementById("missionTarget"),
+      missionHint: document.getElementById("missionHint"),
+      scoreDisplay: document.getElementById("scoreDisplay"),
+      livesDisplay: document.getElementById("livesDisplay"),
+      levelDisplay: document.getElementById("levelDisplay"),
+      feedbackMsg: document.getElementById("feedbackMsg"),
+      gamePlayfield: document.getElementById("gamePlayfield"),
+      gameOverTitle: document.getElementById("gameOverTitle"),
+      gameOverText: document.getElementById("gameOverText")
     };
 
     this.sound = new SoundManager();
@@ -159,22 +160,39 @@ class KanjiGame {
     this.lastFrameTime = 0;
 
     this.bindEvents();
-    this.toggleOverlay(false);
-    this.setFeedback("Tap Start to play!");
+    this.hideOverlay();
+    this.start();
   }
 
   bindEvents() {
-    this.elements.startBtn?.addEventListener("click", () => {
-      this.sound.init(); // Important: first interaction
-      this.sound.startBGM();
-      this.start();
+    this.elements.backBtn?.addEventListener("click", () => {
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        window.location.href = '/projects';
+      }
     });
 
     this.elements.pauseBtn?.addEventListener("click", () => this.togglePause());
 
-    this.elements.restartBtn?.addEventListener("click", () => this.start());
+    this.elements.restartGameBtn?.addEventListener("click", () => {
+      this.sound.init();
+      this.sound.startBGM();
+      this.start();
+    });
 
-    this.elements.gameLayer.addEventListener("pointerdown", (e) => {
+    this.elements.retryBtn?.addEventListener("click", () => {
+      this.sound.init();
+      this.sound.startBGM();
+      this.start();
+    });
+
+    this.elements.bubbleContainer.addEventListener("pointerdown", (e) => {
+      // Initialize sound/BGM on first user interaction
+      if (this.sound.context?.state !== 'running') {
+        this.sound.init();
+        this.sound.startBGM();
+      }
       if (!this.state.isPlaying || this.state.isPaused) return;
       const bubble = e.target.closest(".bubble");
       if (bubble) {
@@ -194,28 +212,24 @@ class KanjiGame {
       if (this.animationId) cancelAnimationFrame(this.animationId);
       this.elements.pauseIcon.classList.add("hidden");
       this.elements.playIcon.classList.remove("hidden");
-      this.setFeedback("PAUSED");
-      this.elements.gameLayer.style.opacity = "0.5";
+      this.showFeedback("PAUSED");
+      this.elements.bubbleContainer.style.opacity = "0.5";
       if (this.sound.context) this.sound.context.suspend();
     } else {
       this.lastFrameTime = performance.now();
       this.gameLoop(this.lastFrameTime);
-      this.elements.pauseIcon.classList.remove("hidden");
-      this.elements.playIcon.classList.add("hidden");
-      this.setFeedback("RESUMED");
-      this.elements.gameLayer.style.opacity = "1";
+      this.showFeedback("RESUMED");
+      this.elements.bubbleContainer.style.opacity = "1";
       if (this.sound.context) this.sound.context.resume();
     }
   }
 
-  toggleOverlay(show) {
-    if (show) {
-      this.elements.gameOver.classList.remove("hidden");
-      this.elements.gameOver.style.display = "grid";
-    } else {
-      this.elements.gameOver.classList.add("hidden");
-      this.elements.gameOver.style.display = "none";
-    }
+  hideOverlay() {
+    this.elements.gameOverOverlay.classList.remove("show");
+  }
+
+  showOverlay() {
+    this.elements.gameOverOverlay.classList.add("show");
   }
 
   start() {
@@ -230,19 +244,15 @@ class KanjiGame {
     };
 
     // Reset visual states
-    this.elements.startBtn.textContent = "Restart";
-    this.elements.buildContainer.classList.remove("merged");
-    this.elements.pauseIcon.classList.remove("hidden");
-    this.elements.playIcon.classList.add("hidden");
-    this.elements.gameLayer.style.opacity = "1";
-    this.elements.targetKanji.style.transform = "";
-    this.elements.targetKanji.style.color = "";
+    this.elements.bubbleContainer.style.opacity = "1";
+    this.elements.missionTarget.style.transform = "";
+    this.elements.missionTarget.style.color = "";
 
     this.shuffle(PUZZLES);
     this.updateUI();
     this.loadLevel();
-    this.toggleOverlay(false);
-    this.setFeedback("Tap the components in order!");
+    this.hideOverlay();
+    this.showFeedback("Tap the components in order!");
 
     if (this.animationId) cancelAnimationFrame(this.animationId);
     this.lastFrameTime = performance.now();
@@ -259,12 +269,11 @@ class KanjiGame {
     this.currentPuzzle = puzzle;
     this.state.currentStep = 0;
 
-    this.elements.targetKanji.textContent = puzzle.target;
-    this.elements.targetHint.textContent = `Reading: 「${puzzle.meaning}」`;
+    this.elements.missionTarget.textContent = puzzle.target;
+    this.elements.missionHint.textContent = `Reading: 「${puzzle.meaning}」`;
 
     this.renderSlots();
     this.spawnBubbles();
-    this.elements.buildContainer.classList.remove("merged");
 
     // Ensure loop is running if it was stopped
     if (this.state.isPlaying && !this.state.isPaused) {
@@ -274,17 +283,17 @@ class KanjiGame {
   }
 
   renderSlots() {
-    this.elements.buildArea.innerHTML = "";
+    this.elements.buildSlots.innerHTML = "";
     this.currentPuzzle.parts.forEach((_, i) => {
       const slot = document.createElement("div");
-      slot.className = "part-slot";
+      slot.className = "slot";
       slot.dataset.index = i;
-      this.elements.buildArea.appendChild(slot);
+      this.elements.buildSlots.appendChild(slot);
     });
   }
 
   spawnBubbles() {
-    this.elements.gameLayer.innerHTML = "";
+    this.elements.bubbleContainer.innerHTML = "";
     this.state.bubbles = [];
 
     const parts = [...this.currentPuzzle.parts, ...this.currentPuzzle.extras];
@@ -311,7 +320,7 @@ class KanjiGame {
     bubble.style.left = `${x}%`;
     bubble.style.top = `${y}%`;
 
-    this.elements.gameLayer.appendChild(bubble);
+    this.elements.bubbleContainer.appendChild(bubble);
 
     this.state.bubbles.push({
       element: bubble,
@@ -378,8 +387,8 @@ class KanjiGame {
       bubble.style.backgroundColor = "#fca5a5";
       setTimeout(() => bubble.style.backgroundColor = "", 200);
 
-      this.elements.gameLayer.classList.add("shake");
-      setTimeout(() => this.elements.gameLayer.classList.remove("shake"), 300);
+      this.elements.bubbleContainer.classList.add("shake");
+      setTimeout(() => this.elements.bubbleContainer.classList.remove("shake"), 300);
 
       if (this.state.lives <= 0) {
         this.gameOver("Game Over", `Final Score: ${this.state.score}`);
@@ -389,7 +398,7 @@ class KanjiGame {
 
   animateSoulFlight(bubbleElement, slotIndex) {
     const rect = bubbleElement.getBoundingClientRect();
-    const slots = this.elements.buildArea.children;
+    const slots = this.elements.buildSlots.children;
     const targetSlot = slots[slotIndex];
     if (!targetSlot) return;
     const targetRect = targetSlot.getBoundingClientRect();
@@ -423,10 +432,10 @@ class KanjiGame {
     this.updateUI();
 
     // Animate parts flying to target
-    const startRect = this.elements.buildContainer.getBoundingClientRect();
-    const targetRect = this.elements.targetKanji.getBoundingClientRect();
+    const startRect = this.elements.buildSlots.getBoundingClientRect();
+    const targetRect = this.elements.missionTarget.getBoundingClientRect();
 
-    const flyingGroup = this.elements.buildArea.cloneNode(true);
+    const flyingGroup = this.elements.buildSlots.cloneNode(true);
     flyingGroup.style.position = "fixed";
     flyingGroup.style.left = startRect.left + "px";
     flyingGroup.style.top = startRect.top + "px";
@@ -438,7 +447,7 @@ class KanjiGame {
     document.body.appendChild(flyingGroup);
 
     // Hide original
-    this.elements.buildContainer.style.opacity = "0";
+    this.elements.buildSlots.style.opacity = "0";
 
     // Trigger fly
     requestAnimationFrame(() => {
@@ -446,14 +455,14 @@ class KanjiGame {
       flyingGroup.style.opacity = "0";
     });
 
-    const target = this.elements.targetKanji;
+    const target = this.elements.missionTarget;
     target.style.transition = "transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.6s, color 0.5s ease 0.6s";
     target.style.transform = "scale(1.8)";
     target.style.color = "#fbbf24";
 
     setTimeout(() => {
       flyingGroup.remove();
-      this.elements.buildContainer.style.opacity = "1";
+      this.elements.buildSlots.style.opacity = "1";
       target.style.transform = "";
       target.style.color = "";
       this.loadLevel();
@@ -461,17 +470,21 @@ class KanjiGame {
   }
 
   updateUI() {
-    this.elements.scoreText.textContent = this.state.score;
+    this.elements.scoreDisplay.textContent = this.state.score;
     let hearts = "";
     for (let i = 0; i < 3; i++) {
       hearts += i < this.state.lives ? "❤️" : "🖤";
     }
-    this.elements.livesText.textContent = hearts;
-    this.elements.progressText.textContent = `${this.state.currentIndex + 1} / ${PUZZLES.length}`;
+    this.elements.livesDisplay.textContent = hearts;
+    this.elements.levelDisplay.textContent = `${this.state.currentIndex + 1}/${PUZZLES.length}`;
   }
 
-  setFeedback(msg) {
-    if (this.elements.feedback) this.elements.feedback.textContent = msg;
+  showFeedback(msg) {
+    if (this.elements.feedbackMsg) {
+      this.elements.feedbackMsg.textContent = msg;
+      this.elements.feedbackMsg.classList.remove("hidden");
+      setTimeout(() => this.elements.feedbackMsg.classList.add("hidden"), 2000);
+    }
   }
 
   gameOver(title, msg) {
@@ -479,12 +492,12 @@ class KanjiGame {
     cancelAnimationFrame(this.animationId);
     this.animationId = null;
 
-    this.toggleOverlay(true);
-    document.getElementById("gameOverTitle").textContent = title;
-    document.getElementById("gameOverText").textContent = msg;
+    this.showOverlay();
+    this.elements.gameOverTitle.textContent = title;
+    this.elements.gameOverText.textContent = msg;
 
     // Reset button text
-    this.elements.startBtn.textContent = "Start";
+    // startBtn is removed
   }
 
   shuffle(array) {

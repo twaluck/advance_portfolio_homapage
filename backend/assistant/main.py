@@ -1,20 +1,27 @@
 import speech_recognition as sr
 import webbrowser
-import pyttsx3
 import musicLibrary
 from gtts import gTTS
 from openai import OpenAI
-import pygame
 import os
+import subprocess
+
+try:
+    import pyttsx3
+except ImportError:
+    pyttsx3 = None
 #webbrowser.open("https://www.google.com")
 
 recognizer = sr.Recognizer()
-engine = pyttsx3.init()
+engine = pyttsx3.init() if pyttsx3 else None
 #newsapi = "REDACTED_OPENAI_API_KEY"
 
 def speak_old(text):
-    engine.say(text)
-    engine.runAndWait()
+    if engine:
+        engine.say(text)
+        engine.runAndWait()
+    else:
+        speak(text)
 
 def aiprocess(command):
      client = OpenAI(api_key ="REDACTED_OPENAI_API_KEY")
@@ -30,17 +37,7 @@ def aiprocess(command):
 def speak(text):
      tts = gTTS(text)
      tts.save('temp.mp3')
-
-     pygame.mixer.init()
-
-     pygame.mixer.music.load('temp.mp3')
-
-     pygame.mixer.music.play()
-
-     while pygame.mixer.music.get_busy():
-          pygame.time.Clock().tick(10)
-     
-     pygame.mixer.music.unload()
+     subprocess.run(["afplay", "temp.mp3"], check=False)
      os.remove('temp.mp3')
 
 

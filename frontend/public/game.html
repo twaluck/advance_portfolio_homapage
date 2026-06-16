@@ -3,90 +3,367 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#0f172a" />
   <title>漢字コネクト | Game</title>
   <link rel="stylesheet" href="css/style.css" />
+  <style>
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      -webkit-user-select: none;
+      user-select: none;
+      -webkit-touch-callout: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Modern Game UI */
+    .game-container {
+      display: flex;
+      flex-direction: column;
+      height: 100dvh;
+      background: radial-gradient(circle at top, #1e293b, #0f172a 55%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .game-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      gap: 1rem;
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      z-index: 100;
+      flex-shrink: 0;
+    }
+
+    .game-header-left {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .game-header-center {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .game-stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0.5rem 1rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      backdrop-filter: blur(4px);
+    }
+
+    .game-stat-label {
+      font-size: 0.75rem;
+      color: rgba(248, 250, 252, 0.6);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .game-stat-value {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #38bdf8;
+      margin-top: 0.25rem;
+    }
+
+    .game-header-right {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .game-arena {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 2rem 1rem;
+      overflow: hidden;
+    }
+
+    .game-mission {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      z-index: 10;
+    }
+
+    .mission-label {
+      font-size: 0.875rem;
+      color: rgba(248, 250, 252, 0.6);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .mission-target {
+      font-size: 4rem;
+      font-weight: 700;
+      color: #38bdf8;
+      text-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+      line-height: 1;
+    }
+
+    .mission-hint {
+      font-size: 0.875rem;
+      color: rgba(248, 250, 252, 0.5);
+      font-style: italic;
+    }
+
+    .playfield {
+      flex: 1;
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+    }
+
+    .bubble-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .build-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 2rem;
+      z-index: 20;
+    }
+
+    .build-label {
+      font-size: 0.875rem;
+      color: rgba(248, 250, 252, 0.6);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .build-slots {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .slot {
+      width: 60px;
+      height: 60px;
+      border: 2px solid rgba(56, 189, 248, 0.3);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      background: rgba(56, 189, 248, 0.05);
+      backdrop-filter: blur(4px);
+      color: #38bdf8;
+    }
+
+    .feedback-message {
+      position: fixed;
+      bottom: 6rem;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 1rem 2rem;
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 12px;
+      color: #38bdf8;
+      font-size: 0.875rem;
+      text-align: center;
+      backdrop-filter: blur(4px);
+      z-index: 50;
+      max-width: 90%;
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.95);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+      backdrop-filter: blur(5px);
+    }
+
+    .overlay.show {
+      display: flex;
+    }
+
+    .overlay-content {
+      text-align: center;
+      animation: slideUp 0.4s ease-out;
+    }
+
+    .overlay-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #38bdf8;
+    }
+
+    .overlay-text {
+      font-size: 1.125rem;
+      color: rgba(248, 250, 252, 0.8);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Mobile Optimizations */
+    @media (max-width: 768px) {
+      .game-header {
+        padding: 0.75rem;
+        gap: 0.5rem;
+      }
+
+      .game-header-center {
+        gap: 0.5rem;
+      }
+
+      .game-stat {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.875rem;
+      }
+
+      .game-stat-value {
+        font-size: 1rem;
+      }
+
+      .game-arena {
+        padding: 1rem;
+      }
+
+      .mission-target {
+        font-size: 3rem;
+      }
+
+      .slot {
+        width: 50px;
+        height: 50px;
+        font-size: 1.25rem;
+      }
+
+      .overlay-title {
+        font-size: 1.875rem;
+      }
+
+      .overlay-text {
+        font-size: 1rem;
+      }
+    }
+  </style>
 </head>
 
-<body class="game-page">
+<body>
+  <div class="game-container">
+    <!-- Header with Stats -->
+    <header class="game-header">
+      <div class="game-header-left">
+        <button class="button ghost icon-only" id="backBtn" aria-label="Go Back">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+        </button>
+      </div>
+      <div class="game-header-center">
+        <div class="game-stat">
+          <div class="game-stat-label">Score</div>
+          <div class="game-stat-value" id="scoreDisplay">0</div>
+        </div>
+        <div class="game-stat">
+          <div class="game-stat-label">Lives</div>
+          <div class="game-stat-value" id="livesDisplay">❤️❤️❤️</div>
+        </div>
+        <div class="game-stat">
+          <div class="game-stat-label">Level</div>
+          <div class="game-stat-value" id="levelDisplay">1/15</div>
+        </div>
+      </div>
+      <div class="game-header-right">
+        <button class="button ghost icon-only" id="restartGameBtn" aria-label="Restart Game">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="1 4 1 10 7 10"></polyline>
+            <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+          </svg>
+        </button>
+        <button class="button ghost icon-only" id="pauseBtn" aria-label="Pause">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="6" y="4" width="4" height="16"></rect>
+            <rect x="14" y="4" width="4" height="16"></rect>
+          </svg>
+        </button>
+      </div>
+    </header>
 
+    <!-- Main Game Arena -->
+    <div class="game-arena">
+      <!-- Mission -->
+      <div class="game-mission">
+        <div class="mission-label">Mission</div>
+        <div class="mission-target" id="missionTarget">-</div>
+        <div class="mission-hint" id="missionHint">Tap Start to Begin</div>
+      </div>
 
-  <main class="game-main game-fullscreen">
-    <div class="game-bg">
-      <div class="orb orb--one"></div>
-      <div class="orb orb--two"></div>
-      <div class="orb orb--three"></div>
-      <div class="floating-kanji" id="floatingKanji"></div>
+      <!-- Playfield with Bubbles -->
+      <div class="playfield" id="gamePlayfield">
+        <div class="bubble-container" id="bubbleContainer"></div>
+      </div>
+
+      <!-- Build Section -->
+      <div class="build-section">
+        <div class="build-label">Components Built</div>
+        <div class="build-slots" id="buildSlots"></div>
+      </div>
     </div>
+  </div>
 
-    <canvas id="particleCanvas" class="particle-canvas"></canvas>
+  <!-- Feedback Message -->
+  <div class="feedback-message hidden" id="feedbackMsg"></div>
 
-    <section class="game-playfield sketch-layout">
-      <div class="hud-bar">
-        <div class="hud-actions-left">
-          <a href="index.html" class="button ghost icon-only" aria-label="Back to Home">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M19 12H5M12 19l-7-7 7-7" />
-            </svg>
-          </a>
-        </div>
-        <div class="hud-center-stats">
-          <div class="hud-chip">
-            <span class="hud-label">Score</span>
-            <span class="hud-value" id="scoreText">0</span>
-          </div>
-          <div class="hud-chip lives-chip">
-            <span class="hud-label">Lives</span>
-            <span class="hud-value" id="livesText">❤️❤️❤️</span>
-          </div>
-          <div class="hud-chip">
-            <span class="hud-label">Level</span>
-            <span class="hud-value" id="progressText">1 / 15</span>
-          </div>
-        </div>
-        <div class="hud-actions">
-          <button class="button ghost icon-only" id="pauseGame" aria-label="Pause Game">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-              id="pauseIcon">
-              <rect x="6" y="4" width="4" height="16"></rect>
-              <rect x="14" y="4" width="4" height="16"></rect>
-            </svg>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-              id="playIcon" class="hidden">
-              <polygon points="5 3 19 12 5 21 5 3"></polygon>
-            </svg>
-          </button>
-          <button class="button" id="startGame">Start</button>
-        </div>
-      </div>
+  <!-- Game Over Overlay -->
+  <div class="overlay" id="gameOverOverlay">
+    <div class="overlay-content">
+      <div class="overlay-title" id="gameOverTitle">Time Up!</div>
+      <div class="overlay-text" id="gameOverText">Your Score: 0</div>
+      <button class="button" id="retryBtn">Try Again</button>
+    </div>
+  </div>
 
-      <div class="mission-pill">
-        <span class="mission-title">Mission</span>
-        <span class="mission-kanji" id="targetKanji">-</span>
-        <span class="mission-hint" id="targetHint">Tap Start</span>
-      </div>
-
-      <div class="bubble-layer" id="gameLayer"></div>
-
-      <div class="build-area-container">
-        <div class="build-area" id="buildArea"></div>
-      </div>
-
-      <div class="feedback-inline" id="feedbackText">ここに結果が表示されます。</div>
-
-      <div class="game-overlay hidden" id="gameOver">
-        <div class="overlay-card">
-          <h2 id="gameOverTitle">Time Up</h2>
-          <p id="gameOverText">もう一度挑戦しましょう。</p>
-          <button class="button" id="restartGame" type="button">Restart</button>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <p>© 2024 学生ポートフォリオ</p>
-  </footer>
   <script src="js/game.js"></script>
 </body>
 
