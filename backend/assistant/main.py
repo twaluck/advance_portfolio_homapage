@@ -14,7 +14,6 @@ except ImportError:
 
 recognizer = sr.Recognizer()
 engine = pyttsx3.init() if pyttsx3 else None
-#newsapi = "REDACTED_OPENAI_API_KEY"
 
 def speak_old(text):
     if engine:
@@ -24,7 +23,10 @@ def speak_old(text):
         speak(text)
 
 def aiprocess(command):
-     client = OpenAI(api_key ="REDACTED_OPENAI_API_KEY")
+     api_key = os.getenv("OPENAI_API_KEY")
+     if not api_key:
+          raise RuntimeError("OPENAI_API_KEY is not set")
+     client = OpenAI(api_key=api_key)
      completion = client.chat.completions.create(
     model ="gpt-3.5-turbo",
     messages=[
@@ -82,7 +84,6 @@ if __name__ == "__main__":
                        print("jarvis is active...")
                        audio = r.listen(source)
                        command =r.recognize_google(audio)
-                       #REDACTED_OPENAI_API_KEY
 
                        processcommand(command)
              
